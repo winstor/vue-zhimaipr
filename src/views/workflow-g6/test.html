@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>响应节点区域事件</title>
+    <style>::-webkit-scrollbar{display:none;}html,body{overflow:hidden;margin:0;}</style>
+</head>
+<body>
+<div id="mountNode"></div>
+<script>/*Fixing iframe window.innerHeight 0 issue in Safari*/document.body.clientHeight;</script>
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.1.1/build/g6.js"></script>
+<style>
+    #graph-container canvas {
+        border: 1px solid #ccc;
+    }
+    .node-event-demo  .header {
+        font-size: 14px;
+        margin: 10px 0;
+    }
+    .graph-tooltip {
+        border: 1px solid #e2e2e2;
+        border-radius: 4px;
+        font-size: 12px;
+        color: #545454;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 10px 8px;
+        box-shadow: rgb(174, 174, 174) 0px 0px 10px;
+        position: absolute
+    }
+</style>
+<script>
+    /**
+     * 演示如何响应节点某一区域上的点击事件
+     * by 长哲
+     */
+
+    var INNER_CIRCLE_CLASS = "node-inner-circle";
+    var GRAPH_CONTAINER = "mountNode";
+
+    var tooltipEl = null;
+
+    // 在指定的位置显示tooltip
+    function showTooltip(message, position) {
+        if (!tooltipEl) {
+            var container = document.getElementById(GRAPH_CONTAINER);
+            tooltipEl = document.createElement("div");
+            tooltipEl.setAttribute("class", "graph-tooltip");
+            container.appendChild(tooltipEl);
+        }
+        tooltipEl.textContent = message;
+        // tooltip是相对于画布canvas element绝对定位，所以position的x，y必须是相对于画布的坐标
+        tooltipEl.style.left = position.x + "px";
+        tooltipEl.style.top = position.y + "px";
+        tooltipEl.style.display = "block";
+    }
+
+    // 隐藏tooltip
+    function hideTooltip() {
+        if (!tooltipEl) {
+            return;
+        }
+        tooltipEl.style.display = "none";
+    }
+
+    // 注册自定义节点
+    G6.registerNode("customNode", {
+        // 绘制节点
+        drawShape: function drawShape(cfg, group) {
+            var shapeType = this.shapeType;
+            var style = G6.Util.mix({}, this.getShapeStyle(cfg), {
+                x: 0,
+                y: 0,
+                stroke: '#000',
+                r: 50
+            });
+            var shape = group.addShape(shapeType, {
+                attrs: style
+            });
+            // 绘制节点里面的小圆。点击这个小圆会显示tooltip
+            var innerCircle = group.addShape("circle", {
+                attrs: {
+                    x: 0,
+                    y: -30,
+                    r: 10,
+                    fill: "green",
+                    cursor: "pointer"
+                }
+            });
+            // 设置className属性
+            innerCircle.set("className", INNER_CIRCLE_CLASS);
+            return shape;
+        }
+    }, "circle");
+
+    function initGraph() {
+        var data = {
+            nodes: [{
+                id: "node1",
+                x: 100,
+                y: 200,
+                label: "node1",
+                size: 100,
+                shape: "customNode"
+            }, {
+                id: "node2",
+                x: 300,
+                y: 200,
+                label: "node2",
+                size: 100,
+                shape: "customNode"
+            }],
+            edges: [{
+                source: "node1",
+                target: "node2"
+            }]
+        };
+
+        var graph = new G6.Graph({
+            container: GRAPH_CONTAINER,
+            width: 500,
+            height: 500,
+            modes: {
+                default: ["drag-canvas", {
+                    type: "drag-node",
+                    delegate: false
+                }, {
+                    type: "zoom-canvas",
+                    sensitivity: 0.5
+                }]
+            }
+        });
+
+        graph.data(data);
+        graph.render();
+
+        return graph;
+    }
+
+    var graph = initGraph();
+
+    var tipDiv = document.createElement("div");
+    tipDiv.innerHTML = '试一试点击节点内部绿色圆点部分或其他部分。';
+    var graphDiv = document.getElementById("mountNode");
+    document.body.insertBefore(tipDiv, graphDiv);
+
+    // 节点上的点击事件
+    graph.on("node:click", function(event) {
+        var node = event.item;
+        var nodeId = node.get("model").id;
+        var shape = event.target;
+
+        if (shape.get("className") === INNER_CIRCLE_CLASS) {
+            // 如果点击是发生在节点里面的小圆上，显示tooltip
+            showTooltip("tooltip for " + nodeId, {
+                x: event.canvasX,
+                y: event.canvasY
+            });
+        } else {
+            // 否则隐藏tooltip
+            hideTooltip();
+        }
+    });
+
+    // 点击画布，也隐藏tooltip
+    graph.on("canvas:click", function(event) {
+        hideTooltip();
+    });
+</script></body>
+</html>
