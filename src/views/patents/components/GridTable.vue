@@ -30,7 +30,7 @@
 						</el-table-column>
 						<el-table-column align="center" label="管理员">
 								<template slot-scope="scope">
-										{{ scope.row.username }}
+										{{ scope.row.creator }}
 								</template>
 						</el-table-column>
 						<el-table-column align="center" label="交易状态">

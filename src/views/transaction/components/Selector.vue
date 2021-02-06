@@ -19,9 +19,9 @@
             return {
                 list: [
                     {id: 0, name: '全部'},
-                    {id: 1, name: '30天以内'},
-                    {id: 2, name: '半年以内'},
-                    {id: 3, name: '已过期'}
+                    {id: 3, name: '已下架'},
+                    {id: 1, name: '待交易'},
+                    {id: 2, name: '交易完成'},
                 ]
             }
         },
