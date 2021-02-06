@@ -43,6 +43,8 @@
         },
         computed: {
             imageUrl() {
+                if(!this.value)
+                    return ''
                 return this.value
             }
         },

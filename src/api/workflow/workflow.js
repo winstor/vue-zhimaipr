@@ -1,4 +1,4 @@
-import request from '@/utils/workflow-request'
+import request from '@/utils/request'
 
 export function getFieldList(id) {
     return request({

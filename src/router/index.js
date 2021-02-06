@@ -7,11 +7,14 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
-
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
+// import nestedRouter from './modules/nested'
+import userRouter from './modules/user'
+import patentRouter from './modules/patent'
+import transactionRouter from './modules/transaction'
+import adminRouter from './modules/admin'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -71,137 +74,21 @@ export const constantRoutes = [
         hidden: true
     },
     {
+        path: '/patent-share/:id',
+        meta: {title: '分享给好友'},
+        component: () => import('@/views/patents/share'),
+        hidden: true
+    },
+    {
         path: '/',
         component: Layout,
         redirect: '/dashboard',
-        // hidden: true,
         children: [
             {
                 path: 'dashboard',
                 component: () => import('@/views/dashboard/index'),
                 name: 'Dashboard',
-                meta: {title: 'home',affix: true},
-                hidden: true,
-            }
-        ]
-    },
-    {
-        path: '/profile',
-        component: Layout,
-        redirect: '/profile/index',
-        hidden: true,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/profile/index'),
-                name: 'Profile',
-                meta: {title: 'Profile', icon: 'user', noCache: true}
-            }
-        ]
-    },
-    {
-        path: '/workbench',
-        component: Layout,
-        redirect: '/dashboard',
-        name: "workbench",
-        meta: {title: '我的工作台',icon:'el-icon-s-home'},
-        children: [
-            {
-                path: 'todo',
-                component: () => import('@/views/dashboard/index'),
-                name: 'Todo',
-                meta: {title: '待办事项', icon: 'el-icon-message-solid'}
-            },
-            {
-                path: 'unread',
-                component: () => import('@/views/dashboard/index'),
-                name: 'Unread',
-                meta: {title: '未读消息', icon: 'message'}
-            },
-            {
-                path: 'my-patent',
-                component: () => import('@/views/dashboard/index'),
-                name: 'MyPatent',
-                meta: {title: '我的专利', icon: 'el-icon-postcard'}
-            },
-            {
-                path: 'share-patent',
-                component: () => import('@/views/dashboard/index'),
-                name: 'SharePatent',
-                meta: {title: '他人分享', icon: 'el-icon-share'}
-            },
-        ]
-    },
-    {
-        path: '/workflow-setting',
-        component: Layout,
-        name: 'workflowSetting',
-        meta: {
-            title: '流程配置',
-            icon: 'el-icon-s-help'
-        },
-        children: [
-            {
-                path: 'package',
-                component: () => import('@/views/workflow-setting/package'),
-                name: 'workflowPackage',
-                meta: {title: '流程包管理'}
-            }, {
-                path: 'workflow',
-                component: () => import('@/views/workflow-setting/workflow'),
-                name: 'workflowList',
-                meta: {title: '流程管理'}
-            },{
-                path: 'workflow/form/:id(\\d+)',
-                component: () => import('@/views/workflow-setting/workflow-form'),
-                name: 'settingWorkflowForm',
-                meta: {title: '表单设置', noCache: true, activeMenu: '/workflow-setting/workflow-form'},
-                hidden: true
-            }, {
-                path: 'workflow/node/:id(\\d+)',
-                component: () => import('@/views/workflow-setting/workflow-node'),
-                name: 'settingWorkflowNode',
-                meta: {title: '流程设置', noCache: true, activeMenu: '/workflow-setting/workflow-node'},
-                hidden: true
-            }
-        ]
-    },
-    {
-        path: '/workflow-apply',
-        component: Layout,
-        name: 'workflowApply',
-        meta: {
-            title: '申请列表',
-        },
-        hidden: true,
-        children: [
-            {
-                path: '/workflow/:workflow_id(\\d+)/apply-create',
-                name: 'create',
-                meta: {title: '添加申请'},
-                component: () => import('@/views/workflow/apply/create'),
-                hidden: true
-            }, {
-                path: '/workflow/:workflow_id(\\d+)/apply/edit/:id(\\d+)',
-                name: 'edit',
-                meta: {title: '编辑申请'},
-                component: () => import('@/views/workflow/index'),
-                hidden: true
-            },
-        ]
-    }, {
-        path: '/select',
-        component: Layout,
-        name: 'select',
-        meta: {
-            title: '申请列表',
-        },
-        children: [
-            {
-                path: 'export-selected-excel',
-                name: 'SelectExcel',
-                meta: {title: 'selectExcel'},
-                component: () => import('@/views/test/index'),
+                meta: {title: '工作台',affix: true,icon:'el-icon-s-home'},
             }
         ]
     }
@@ -212,8 +99,40 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+    transactionRouter,
+    adminRouter,
+    patentRouter,
+    userRouter,
+    {
+        path: '/admin/templates',
+        component: Layout,
+        meta: {title: '模板'},
+        children: [
+            {
+                path: '',
+                meta: {title: '列表'},
+                component: () => import('@/views/template'),
+            }, {
+                path: '/admin/templates/create',
+                meta: {title: '新建'},
+                component: () => import('@/views/template/create'),
+            }
+        ]
+    },
+    {
+        path: '/button',
+        component: Layout,
+        meta: {title: 'button'},
+        children: [
+            {
+                path: '',
+                meta: {title: 'button'},
+                component: () => import('@/views/button'),
+            }
+        ]
+    },
     // 404 page must be placed at the end !!!
-    {path: '*', redirect: '/404', hidden: true}
+    {path: '*', redirect: '/404', hidden: true},
 ]
 
 const createRouter = () => new Router({

@@ -13,12 +13,15 @@
 														<i class="el-icon-caret-bottom" />
 												</div>
 												<el-dropdown-menu slot="dropdown">
-														<router-link to="/profile/index">
+														<router-link to="/user/info">
 																<el-dropdown-item>个人中心</el-dropdown-item>
 														</router-link>
-														<a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+														<router-link to="/user/changePassword">
 																<el-dropdown-item>修改密码</el-dropdown-item>
-														</a>
+														</router-link>
+														<!--<a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">-->
+																<!--<el-dropdown-item>修改密码</el-dropdown-item>-->
+														<!--</a>-->
 														<el-dropdown-item divided @click.native="logout">
 																<span style="display:block;">退出登录</span>
 														</el-dropdown-item>
@@ -29,33 +32,7 @@
 						<div class="header-nav">
 								<div class="menu-ul-wrapper">
 										<nav class="menu-ul">
-												<ul class="el-menu">
-														<li>
-																<router-link :to="'/'" class="link-type">
-																		专利库
-																</router-link>
-														</li>
-														<li>
-																<router-link :to="'/'" class="link-type">
-																		专利管理
-																</router-link>
-														</li>
-														<li>
-																<router-link :to="'/'" class="link-type">
-																		专利运营
-																</router-link>
-														</li>
-														<li>
-																<router-link :to="'/'" class="link-type">
-																		统计分析
-																</router-link>
-														</li>
-														<li>
-																<router-link :to="'/'" class="link-type">
-																		系统设置
-																</router-link>
-														</li>
-												</ul>
+
 										</nav>
 								</div>
 

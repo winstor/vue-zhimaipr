@@ -121,7 +121,32 @@ aside {
 
 //main-container全局样式
 .app-container {
-  padding: 20px;
+  padding: 0 10px 10px;
+  margin: 0 10px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #fff;
+}
+
+.app-container .box-header {
+  padding: 10px;
+}
+
+.app-container .filter-container {
+  padding-bottom: 10px;
+  .filter-item {
+    margin-left: 0;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .filter-item.el-input {
+    width: 200px;
+  }
+  .filter-item.el-select {
+    width: 150px;
+  }
 }
 
 .components-container {
@@ -171,16 +196,6 @@ aside {
   }
 }
 
-.filter-container {
-  padding-bottom: 10px;
-
-  .filter-item {
-    display: inline-block;
-    vertical-align: middle;
-    margin-bottom: 10px;
-  }
-}
-
 //refine vue-multiselect plugin
 .multiselect {
   line-height: 16px;
@@ -188,4 +203,257 @@ aside {
 
 .multiselect--active {
   z-index: 1000 !important;
+}
+
+.el-menu-item {
+  height: 45px;
+  line-height: 45px;
+}
+
+.el-submenu .el-menu-item {
+  height: 40px;
+  line-height: 40px;
+}
+
+.el-submenu__title {
+  height: 45px;
+  line-height: 45px;
+}
+
+.tool-group {
+  margin-right: 5px;
+}
+
+.el-button--yellow {
+  background-color: #F48742 !important;
+  border-color: #F48742 !important;
+  color: #ffffff;
+}
+
+.el-button--yellow:hover {
+  background-color: #d6783c !important;
+  border-color: #d6783c !important;
+  color: #ffffff;
+}
+
+.el-button--red {
+  background-color: #E7505A !important;
+  border-color: #E7505A !important;
+  color: #ffffff;
+}
+
+.el-button--red:hover {
+  background-color: #c8414a !important;
+  border-color: #c8414a !important;
+  color: #ffffff;
+}
+.el-button--light-red {
+  background-color: #E76950 !important;
+  border-color: #E76950 !important;
+  color: #ffffff;
+}
+
+.el-button--light-red:hover {
+  background-color: #ca4228 !important;
+  border-color: #c55640 !important;
+  color: #ffffff;
+}
+
+.el-button--purple {
+  background-color: #CC50E7 !important;
+  border-color: #CC50E7 !important;
+  color: #ffffff;
+}
+
+.el-button--purple:hover {
+  background-color: #973aab !important;
+  border-color: #973aab !important;
+  color: #ffffff;
+}
+
+.el-button--blue {
+  background-color: #5094E7 !important;
+  border-color: #5094E7 !important;
+  color: #ffffff;
+}
+
+.el-button--blue:hover {
+  background-color: #3968a1 !important;
+  border-color: #3968a1 !important;
+  color: #ffffff;
+}
+
+.el-button--cyan {
+  background-color: #18AC92 !important;
+  border-color: #18AC92 !important;
+  color: #ffffff;
+}
+
+.el-button--cyan:hover {
+  background-color: #108a75 !important;
+  border-color: #108a75 !important;
+  color: #ffffff;
+}
+
+.el-button--green {
+  background-color: #56AC18 !important;
+  border-color: #56AC18 !important;
+  color: #ffffff;
+}
+
+.el-button--green:hover {
+  background-color: #458e10 !important;
+  border-color: #458e10 !important;
+  color: #ffffff;
+}
+
+
+.one-color {
+  background-color: #E7505A !important;
+  border-color: #E7505A !important;
+  color: #ffffff;
+}
+
+.one-color:hover {
+  background-color: #c8414a !important;
+  border-color: #c8414a !important;
+  color: #ffffff;
+}
+
+.four-color {
+  background-color: #18AC92 !important;
+  border-color: #18AC92 !important;
+  color: #ffffff;
+}
+
+.four-color:hover {
+  background-color: #108a75 !important;
+  border-color: #108a75 !important;
+  color: #ffffff;
+}
+
+.five-color {
+  background-color: #5094E7 !important;
+  border-color: #5094E7 !important;
+  color: #ffffff;
+}
+
+.five-color:hover {
+  background-color: #3968a1 !important;
+  border-color: #3968a1 !important;
+  color: #ffffff;
+}
+
+.seven-color {
+  background-color: #E76950 !important;
+  border-color: #E76950 !important;
+  color: #ffffff;
+}
+
+.seven-color:hover {
+  background-color: #c8414a !important;
+  border-color: #c8414a !important;
+  color: #ffffff;
+}
+
+.app-container {
+  padding-top: 10px;
+}
+
+.tool-container {
+  margin-bottom: 10px;
+}
+
+.tool-container button {
+  margin-bottom: 5px;
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+.tool-container .el-button {
+  margin-left: 0;
+}
+
+.el-dialog__header {
+  background-color: #fafafa;
+  overflow: hidden;
+  border-top-left-radius: 6px !important;
+  border-top-right-radius: 6px !important;
+}
+
+.el-dialog__body {
+  padding: 20px;
+}
+
+.form-box {
+  min-height: 250px;
+  padding: 0 15px 15px 15px;
+  border-radius: 3px;
+  & .box {
+    position: relative;
+    border-radius: 3px;
+    background: #fff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+  }
+  & .box.box-info {
+    border-top-color: #00c0ef;
+  }
+  & .box-header.with-border {
+    border-bottom: 1px solid #f4f4f4;
+  }
+  & .box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;
+    & .box-title {
+      display: inline-block;
+      font-size: 18px;
+      margin: 0;
+      line-height: 1;
+    }
+    & .box-tools {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+  }
+
+  & .box-body {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+  }
+
+  & .box-footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top: 1px solid #f4f4f4;
+    padding: 10px;
+    background-color: #fff;
+
+    & .pull-right {
+      float: right !important;
+    }
+    & .btn-group, .btn-group-vertical {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  & .el-form-item {
+    margin-bottom: 15px;
+
+    & .el-form-item__error {
+      position: relative;
+    }
+  }
 }

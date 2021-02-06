@@ -1,5 +1,4 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getWorkflowRouters } from '@/api/workflow/routers'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import routerFormat from '@/utils/router'
@@ -55,7 +54,7 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getInfo().then(response => {
         const { data } = response
 
         if (!data) {
@@ -73,100 +72,12 @@ const actions = {
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
 
-        //let menuList = res.data.menuList //这是后端的菜单数据
-      let  menuList = [
-          {id:39,title:"IT中心",path:"/it",parent_id:null},
-          {id:150,title:"IT资产",path:"/asset",parent_id:39},
-          {id:151,title:"资产管理",path:"/edit",parent_id:150},
-          {id:153,title:"时段统计",path:"/time",parent_id:150},
-          {id:40,title:"系统设置",path:"/system",parent_id:null},
-      ]
-      let menuRouters = [] //定义一个空数组，这个是用来装真正路由数据的
-
-        //下面就要根据后端的菜单数据组装树型路由数据
-        //先取出根节点，没有父id的就是根节点
-          menuList.forEach((m, i) => {
-              m.path = m.path.replace(/^(\s|\/)+|(\s|\/)+$/g,'');
-              if (m.parent_id == null) {
-                  let module = {
-                      path: '/'+m.path,
-                      component: "Layout",
-                      hidden:true,
-                      meta: {
-                          title: m.title,
-                          fullPath: m.path,
-                          id: m.id,
-                      },
-                      children: []
-                  }
-                  menuRouters.push(module)
-              }
-          })
-        //定义一个递归方法
-          function convertTree(routers) {
-              routers.forEach(r => {
-                  menuList.forEach((m, i) => {
-                      if (m.parent_id && m.parent_id === r.meta.id) {
-                          if (!r.children) r.children = []
-                          m.fullPath = r.meta.fullPath + '/' + m.path
-                          let menu = {
-                              path: m.path,
-                              component: m.fullPath,
-                              meta: { id: m.id, title: m.title,fullPath: m.fullPath }
-                          }
-                          r.children.push(menu)
-                      }
-                  })
-                  if (r.children && r.children.length > 0) {
-                      convertTree(r.children)
-                      r.redirect = '/'+r.children[0].meta.fullPath
-                      //console.log(r.children[0].meta)
-                  }
-              })
-          }
-          convertTree(menuRouters) //用递归填充
-          //router.addRoutes(routerFormat(menuRouters)) //挂载到router
-        commit('SET_ROUTERS', menuRouters)
+        commit('SET_ROUTERS', routers)
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
-  },
-  getWorkflowRouters({commit}) {
-      return new Promise((resolve, reject) => {
-          getWorkflowRouters().then(response => {
-              const {data} = response
-              if (!data) {
-                  reject('Verification failed, please Login again.')
-              }
-              const { groups } = data
-              let routers = []
-              groups.forEach(function(group){
-                  let router ={
-                      path: '/workflow',
-                      component: "Layout",
-                      meta: {title: group.name, icon: "dashboard"},
-                      children: []
-                  };
-                  group.children.forEach(function(children){
-                      router.children.push({
-                          path: '/workflow/' + children.id,
-                          name:"workflowApplyList"+children.id,
-                          component: "workflow",
-                          meta: {
-                              title: children.name,
-                          }
-                      })
-                  })
-                  routers.push(router)
-              })
-              //commit('SET_ROUTERS',routers)
-              resolve(data)
-          }).catch(error => {
-              reject(error)
-          })
-      })
   },
   // user logout
   logout({ commit, state, dispatch }) {

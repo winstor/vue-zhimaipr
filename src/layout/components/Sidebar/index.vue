@@ -13,15 +13,6 @@
         mode="vertical"
       >
         <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
-        <template v-for="menu in $store.state.user.routers">
-          <sidebar-item  v-for="route in menu.children || []" :key="route.path" :item="route" :base-path="route.meta.fullPath"/>
-        </template>
-        <!--<el-menu-tree-->
-                <!--v-for="menu in $store.state.user.routers"-->
-                <!--:menus="menu.children||[]"-->
-                <!--:key="menu.path"-->
-        <!--&gt;-->
-        <!--</el-menu-tree>-->
       </el-menu>
     </el-scrollbar>
   </div>
